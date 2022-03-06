@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 4 - Xây dựng một ứng dụng xem tin tức</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" type="text/css" href="Pr4.css">
+</head>
+<body> 
+    <div id="search">
+        <h1 class="menu">My News <i class="fa fa-search"></i></h1>
+    </div>
+    <div id="container">
+        <div id="item">
+        </div>
+    </div>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="close_modal()" class="w3-button w3-display-topright">&times;</span>
+            <div style="display: inline-block">Keywords</div>
+            <input type="text" id="key_word">
+            <button onclick="timkiem()">Search</button>
+          </div>
+        </div>
+      </div>
+    <script>
+        $(document).ready(function(){
+    fetch('https://gnews.io/api/v4/top-headlines?lang=en&token=ec58ad04b6e2b4d93bd9b98f77add835')
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        let articles = data.articles;
+        for(let i=0; i<articles.length;i++){
+            let str = 
+                '<div class="picture">'
+                +'<img src="'+articles[i].image+'">'
+                +'</div>'
+                +'<div class="content">'
+                +'<div style="width: 100%" class="title">'
+                +'<a style="color:blue" href="'+articles[i].url+'" target="_blank">'+articles[i].title+'</a>'
+                +'</div>'
+                +'<div style="width: 100%">'
+                +'<i style="font-size: 10px;">'+articles[i].publishedAt+'</i>'
+                +'</div>'
+                +'<div style="width: 100%">'
+                +'<p style="font-size: 12px;">'+articles[i].description+'</p>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+            $("#item").append(str)
+        }
+    });
+})
+
+
+    $("#search").click(function(){
+        $('#id01').css('display','block');
+    });
+    function timkiem(){
+        let x = $("#key_word").val();
+        $("#item").empty();
+        fetch('https://gnews.io/api/v4/search?q='+x+'&lang=en&token=ec58ad04b6e2b4d93bd9b98f77add835')
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        console.log(data);
+        let articles = data.articles;
+        for(let i=0; i<articles.length;i++) {
+            let str =
+                '<div class="picture">'
+                +'<img src="'+articles[i].image+'">'
+                +'</div>'
+                +'<div class="content">'
+                +'<div style="width: 100%" class="title">'
+                +'<a style="color:blue" href="'+articles[i].url+'" target="_blank">'+articles[i].title+'</a>'
+                +'</div>'
+                +'<div style="width: 100%">'
+                +'<i style="font-size: 10px;">'+articles[i].publishedAt+'</i>'
+                +'</div>'
+                +'<div style="width: 100%">'
+                +'<p style="font-size: 12px;">'+articles[i].description+'</p>'
+                +'</div>'
+                +'</div>'
+                +'</div>'
+            $("#item").append(str)
+        }
+    });
+    }
+    
+    function close_modal(){
+        $("#key_word").val("")
+        $('#id01').css('display','none')
+
+    }
+    </script>
+</body>
+</html>

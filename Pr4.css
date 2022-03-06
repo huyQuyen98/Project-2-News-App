@@ -1,0 +1,31 @@
+.menu {
+    font-size: 40px;
+    text-align: center;
+    background-color: orange;
+    color: black;
+}
+
+img {
+    width: 400px;
+    height: 180px;
+    margin-top: 15px;
+}
+#search{
+    margin-bottom: 15px;
+}
+
+#item{
+    width: 100%;
+    padding: 5px;
+}
+.picture{
+    width: 30%;
+    display: inline-block;
+}
+.content{
+    width: 70%;
+    display: inline-block;
+}
+.w3-modal-content {
+    padding: 10px 10px;
+}
